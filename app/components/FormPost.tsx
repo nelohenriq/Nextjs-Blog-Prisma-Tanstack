@@ -16,7 +16,7 @@ const FormPost: React.FC<FormPostProps> = ({ submit, isEditing }) => {
   } = useForm<FormInputPost>();
 
   // Fetch tags
-  const { data: dataTags, isLoading: isLoadingTags } = useQuery({
+  const { data: dataTags, isLoading: isLoadingTags } = useQuery<Tag[]>({
     queryKey: ["tags"],
     queryFn: async () => {
       const res = await fetch("/api/tags");
@@ -24,7 +24,7 @@ const FormPost: React.FC<FormPostProps> = ({ submit, isEditing }) => {
       return data;
     },
   });
-  console.log(dataTags);
+  // console.log(dataTags);
 
   return (
     <form
@@ -48,9 +48,11 @@ const FormPost: React.FC<FormPostProps> = ({ submit, isEditing }) => {
         className="select select-bordered w-full max-w-lg"
       >
         <option value="select tags">Select tags</option>
-        <option value="public">Javascript</option>
-        <option value="private">PHP</option>
-        <option value="private">Python</option>
+        {dataTags?.map((tag) => (
+          <option key={tag.id} value={tag.id}>
+            {tag.name}
+          </option>
+        ))}
       </select>
       <button type="submit" className="btn btn-primary w-full max-w-lg">
         {isEditing ? "Update" : "Create"}
