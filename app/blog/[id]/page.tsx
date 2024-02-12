@@ -1,27 +1,17 @@
-const BlogDetail = ({ params }) => {
-  const { id } = params;
+import BackButton from "@/app/components/BackButton";
+import ButtonAction from "@/app/components/ButtonAction";
 
-  const post = posts.find((post) => post.id === id);
-
-  if (!post) {
-    return (
-      <div>
-        <h1>Post not found</h1>
-      </div>
-    );
-  }
-
-  const { title, content, tags } = post;
-
+const BlogDetail = () => {
   return (
     <div>
-      <h1>{title}</h1>
-      <p>{content}</p>
-      <ul>
-        {tags.map((tag) => (
-          <li key={tag}>{tag}</li>
-        ))}
-      </ul>
+      <BackButton />
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold my-4">Post one</h2>
+        <ButtonAction />
+      </div>
+      <p className="text-slate-700">Post one content</p>
     </div>
   );
 };
+
+export default BlogDetail;

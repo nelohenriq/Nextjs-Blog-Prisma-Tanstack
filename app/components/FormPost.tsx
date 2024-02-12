@@ -1,25 +1,34 @@
 "use client";
 import { FormInputPost } from "@/types";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
 
 interface FormPostProps {
   submit: SubmitHandler<FormInputPost>;
+  isEditing?: boolean;
 }
 
-const handleCreatePost = (data: FormInputPost) => {
-  console.log(data);
-};
-
-const FormPost: React.FC<FormPostProps> = ({ submit }) => {
+const FormPost: React.FC<FormPostProps> = ({ submit, isEditing }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormInputPost>();
 
+  // Fetch tags
+  const { data: dataTags, isLoading: isLoadingTags } = useQuery({
+    queryKey: ["tags"],
+    queryFn: async () => {
+      const res = await fetch("/api/tags");
+      const data = await res.json();
+      return data;
+    },
+  });
+  console.log(dataTags);
+
   return (
     <form
-      onSubmit={handleSubmit(handleCreatePost)}
+      onSubmit={handleSubmit(submit)}
       className="flex flex-col items-center justify-center gap-5 mt-10"
     >
       <input
@@ -44,7 +53,7 @@ const FormPost: React.FC<FormPostProps> = ({ submit }) => {
         <option value="private">Python</option>
       </select>
       <button type="submit" className="btn btn-primary w-full max-w-lg">
-        Create your post
+        {isEditing ? "Update" : "Create"}
       </button>
     </form>
   );
