@@ -34,13 +34,14 @@ const FormPost: React.FC<FormPostProps> = ({ submit }) => {
         placeholder="Post content..."
       ></textarea>
       <select
-        defaultValue={"select tags"}
+        defaultValue={""}
         {...register("tags", { required: true })}
         className="select select-bordered w-full max-w-lg"
       >
         <option value="select tags">Select tags</option>
-        <option value="public">Han Solo</option>
-        <option value="private">Greedo</option>
+        <option value="public">Javascript</option>
+        <option value="private">PHP</option>
+        <option value="private">Python</option>
       </select>
       <button type="submit" className="btn btn-primary w-full max-w-lg">
         Create your post
